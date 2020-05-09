@@ -1,0 +1,4 @@
+main: "io.github.mrsperry.artifacts.Artifacts"
+name: "Artifacts"
+version: "1.0.0"
+description: "Independent world modifiers of various effects"
