@@ -1,0 +1,4 @@
+# Global artifact settings
+flags:
+  # If explosions generated from artifacts should break blocks
+  explosion-damage: false
