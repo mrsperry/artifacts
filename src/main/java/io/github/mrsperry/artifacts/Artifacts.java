@@ -28,4 +28,14 @@ public class Artifacts extends JavaPlugin {
     public static Artifacts getInstance() {
         return Artifacts.instance;
     }
+
+    /**
+     * Gets a random whole number between the provided minimum and maximum values (inclusive)
+     * @param min The minimum number
+     * @param max The maximum number
+     * @return A random whole number between the min and max
+     */
+    public static int random(final int min, final int max) {
+        return  (int) (min + (Math.random() * ((max - min) + 1)));
+    }
 }
