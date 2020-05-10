@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class Artifacts extends JavaPlugin {
+    /** The single instance of Artifacts */
+    private static Artifacts instance;
     /**
      * A set of global artifact settings represented as true/false flags.
      * <br><br>
@@ -20,6 +22,7 @@ public class Artifacts extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Artifacts.instance = this;
         Artifacts.flags = new HashSet<>();
 
         // Set default config values if a config isn't found
@@ -59,6 +62,14 @@ public class Artifacts extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    /**
+     * Gets the running instance of this
+     * @return The current Artifacts instance
+     */
+    public static Artifacts getInstance() {
+        return Artifacts.instance;
     }
 
     /**
