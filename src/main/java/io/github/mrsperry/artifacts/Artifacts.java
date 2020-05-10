@@ -1,5 +1,8 @@
 package io.github.mrsperry.artifacts;
 
+import io.github.mrsperry.artifacts.modules.DeathTNT;
+
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Artifacts extends JavaPlugin {
@@ -14,6 +17,10 @@ public class Artifacts extends JavaPlugin {
         this.saveDefaultConfig();
         // Read flag and artifact config values
         Config.initialize(this);
+
+        // Register artifact events
+        final PluginManager manager = this.getServer().getPluginManager();
+        manager.registerEvents(new DeathTNT(), this);
     }
 
     @Override
