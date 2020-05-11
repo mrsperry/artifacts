@@ -43,6 +43,6 @@ public class Artifacts extends JavaPlugin {
      * @return A random whole number between the min and max
      */
     public static int random(final int min, final int max) {
-        return  (int) (min + (Math.random() * ((max - min) + 1)));
+        return (int) (min + (Math.random() * ((max - min) + 1)));
     }
 }
