@@ -1,5 +1,6 @@
 package io.github.mrsperry.artifacts;
 
+import io.github.mrsperry.artifacts.modules.CraftingTimer;
 import io.github.mrsperry.artifacts.modules.DeathTNT;
 
 import org.bukkit.plugin.PluginManager;
@@ -21,6 +22,7 @@ public class Artifacts extends JavaPlugin {
         // Register artifact events
         final PluginManager manager = this.getServer().getPluginManager();
         manager.registerEvents(new DeathTNT(), this);
+        manager.registerEvents(new CraftingTimer(), this);
     }
 
     @Override
