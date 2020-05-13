@@ -1,6 +1,7 @@
 package io.github.mrsperry.artifacts;
 
 import io.github.mrsperry.artifacts.modules.DeathTNT;
+import io.github.mrsperry.artifacts.modules.Teleportitis;
 
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,8 @@ public class Artifacts extends JavaPlugin {
         // Register artifact events
         final PluginManager manager = this.getServer().getPluginManager();
         manager.registerEvents(new DeathTNT(), this);
+
+        new Teleportitis();
     }
 
     @Override

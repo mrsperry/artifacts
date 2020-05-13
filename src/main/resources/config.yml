@@ -11,3 +11,12 @@ settings:
     # The min and max number of ticks that can occur before a spawned TNT can explode
     min-fuse-ticks: 60
     max-fuse-ticks: 100
+  # Teleports players to a nearby random location
+  teleportitis:
+    enabled: true
+    # How many seconds should pass before trying to teleport players
+    teleport-interval: 600
+    # The number of blocks the player can be teleported by in any direction
+    teleport-radius: 50
+    # How many times the teleport should look for a valid location (higher will take more time, lower will result in more failures)
+    teleport-tries: 100
