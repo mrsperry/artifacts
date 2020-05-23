@@ -114,6 +114,17 @@ public class Config {
     }
 
     /**
+     * Sets an artifact's enable or disable state in the config
+     * @param id The artifact's ID
+     * @param enabled If the artifact is enabled or disabled
+     */
+    public static void setArtifactEnable(final String id, final boolean enabled) {
+        final JavaPlugin plugin = Config.plugin;
+        plugin.getConfig().set("settings." + id + ".enabled", enabled);
+        plugin.saveConfig();
+    }
+
+    /**
      * Checks if a flag has been enabled.
      * @param flag The flag to check
      * @return If the flag is enabled
