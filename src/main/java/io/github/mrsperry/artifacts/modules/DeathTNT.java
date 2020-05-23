@@ -26,9 +26,6 @@ public class DeathTNT extends Artifact implements Listener {
     /** The maximum number of ticks before the TNT explodes */
     private final int maxFuseTicks;
 
-    /**
-     * Initializes config values for DeathTNT
-     */
     public DeathTNT() {
         super("death-tnt");
         this.minFuseTicks = Config.getInt("death-tnt", "min-fuse-ticks", 60);
@@ -37,8 +34,7 @@ public class DeathTNT extends Artifact implements Listener {
 
     @EventHandler
     private void onEntityDeath(final EntityDeathEvent event) {
-        // Check if this artifact is enabled
-        if (DeathTNT.isEnabled()) {
+        if (!this.isEnabled()) {
             return;
         }
 

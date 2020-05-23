@@ -7,33 +7,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Artifact {
+    /** The config name of this artifact */
+    private String id;
     /** The current enable state of this artifact */
-    private static boolean enabled;
-    /** A map of any runnables and their timers this artifact handles */
-    private static final Map<BukkitRunnable, Integer> runnables = new HashMap<>();
+    private boolean enabled;
+    /** All runnables handled by this artifact */
+    private Map<BukkitRunnable, Integer> runnables;
 
     /**
      * Sets the initial enable state of this artifact
-     * @param artifactName The config name of this artifact
+     * @param id The config name of this artifact
      */
-    protected Artifact(final String artifactName) {
-        Artifact.enabled = Config.getBoolean(artifactName, "enabled", false);
+    protected Artifact(final String id) {
+        this.id = id;
+        this.enabled = Config.getBoolean(id, "enabled", false);
+        this.runnables = new HashMap<>();
+    }
+
+    /**
+     * @return The name used to get values of this artifact from the config
+     */
+    public String getID() {
+        return this.id;
     }
 
     /**
      * Sets the artifact's enable state and starts or stops any handled runnables
      * @param enabled The new enable state
      */
-    public static void setEnabled(final boolean enabled) {
-        if (Artifact.enabled == enabled) {
+    public void setEnabled(final boolean enabled) {
+        if (this.enabled == enabled) {
             return;
         }
 
-        Artifact.enabled = enabled;
+        this.enabled = enabled;
 
-        for (final BukkitRunnable runnable : Artifact.runnables.keySet()) {
+        for (final BukkitRunnable runnable : this.runnables.keySet()) {
             if (enabled) {
-                final int interval = Artifact.runnables.get(runnable);
+                final int interval = this.runnables.get(runnable);
                 runnable.runTaskTimer(Artifacts.getInstance(), interval, interval);
             } else {
                 Bukkit.getScheduler().cancelTask(runnable.getTaskId());
@@ -44,8 +55,8 @@ public class Artifact {
     /**
      * @return If this artifact is enabled
      */
-    public static boolean isEnabled() {
-        return Artifact.enabled;
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
     /**
@@ -55,10 +66,10 @@ public class Artifact {
      * @param runnable The runnable to be added
      * @param interval The interval at which the runnable should be run
      */
-    public static void addRunnable(final BukkitRunnable runnable, final int interval) {
-        Artifact.runnables.put(runnable, interval);
+    public void addRunnable(final BukkitRunnable runnable, final int interval) {
+        this.runnables.put(runnable, interval);
 
-        if (Artifact.isEnabled()) {
+        if (this.isEnabled()) {
             runnable.runTaskTimer(Artifacts.getInstance(), interval, interval);
         }
     }
