@@ -21,7 +21,7 @@ public class SharedDamage extends Artifact implements Listener {
 
     @EventHandler (priority = EventPriority.LOWEST)
     private void onEntityDamage(final EntityDamageEvent event) {
-        if (!SharedDamage.isEnabled()) {
+        if (!this.isEnabled()) {
             return;
         }
 

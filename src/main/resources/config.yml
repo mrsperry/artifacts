@@ -11,5 +11,12 @@ settings:
     # The min and max number of ticks that can occur before a spawned TNT can explode
     min-fuse-ticks: 60
     max-fuse-ticks: 100
-  shared-damage:
+  # Prevents planting of all harvestable plants and saplings
+  pestilence:
+    enabled: false
+  # Kills all other non-gamemoded players when one player dies
+  shared-death:
     enabled: true
+  # Damages all other non-gamemoded players when one player takes damage
+  shared-damage:
+    enabled: false
