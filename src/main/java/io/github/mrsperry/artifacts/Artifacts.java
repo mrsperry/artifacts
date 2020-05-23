@@ -15,7 +15,7 @@ import java.util.Set;
 public class Artifacts extends JavaPlugin {
     /** The single instance of Artifacts */
     private static Artifacts instance;
-    /**  */
+    /** A set of all artifact instances */
     private static Set<Artifact> artifactInstances;
 
     @Override
@@ -41,17 +41,13 @@ public class Artifacts extends JavaPlugin {
             }
         }
 
+        // Register commands
         final PluginCommand command = this.getCommand("artifacts");
         if (command != null) {
             command.setExecutor(new Commands());
         } else {
             this.getLogger().severe("Could not bing executor for the plugin's command!");
         }
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     /**
