@@ -3,3 +3,7 @@ name: ${project.name}
 version: ${project.version}
 api-version: "1.15"
 description: "Independent world modifiers of various effects"
+commands:
+  artifacts:
+    description: "Used to enable and disable artifacts"
+    usage: "/artifacts <list | enable | disable | randomize>"

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 
 import io.github.mrsperry.artifacts.modules.DeathTNT;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,6 +39,13 @@ public class Artifacts extends JavaPlugin {
             if (artifact instanceof Listener) {
                 manager.registerEvents((Listener) artifact, this);
             }
+        }
+
+        final PluginCommand command = this.getCommand("artifacts");
+        if (command != null) {
+            command.setExecutor(new Commands());
+        } else {
+            this.getLogger().severe("Could not bing executor for the plugin's command!");
         }
     }
 
