@@ -3,10 +3,7 @@ package io.github.mrsperry.artifacts.modules;
 import io.github.mrsperry.artifacts.Artifact;
 import io.github.mrsperry.artifacts.Artifacts;
 
-import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
-import org.bukkit.NamespacedKey;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,6 +28,11 @@ public class SharedDeath extends Artifact implements Listener {
         // Find each player on each world
         for (final World world : Bukkit.getWorlds()) {
             for (final Player player : world.getEntitiesByClass(Player.class)) {
+                final GameMode gameMode = player.getGameMode();
+                if (gameMode == GameMode.CREATIVE || gameMode == GameMode.SPECTATOR) {
+                    continue;
+                }
+
                 final PersistentDataContainer data = player.getPersistentDataContainer();
 
                 // Don't kill any player that has already been killed
