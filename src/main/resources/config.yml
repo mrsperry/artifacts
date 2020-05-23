@@ -13,4 +13,4 @@ settings:
     max-fuse-ticks: 100
   # Prevents planting of all harvestable plants and saplings
   pestilence:
-    enabled: true
+    enabled: false

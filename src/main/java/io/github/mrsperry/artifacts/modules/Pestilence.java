@@ -2,7 +2,9 @@ package io.github.mrsperry.artifacts.modules;
 
 import io.github.mrsperry.artifacts.Artifact;
 import io.github.mrsperry.mcutils.types.CropTypes;
+
 import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +17,7 @@ public class Pestilence extends Artifact implements Listener {
 
     @EventHandler
     private void onBlockPlace(final BlockPlaceEvent event) {
-        if (!Pestilence.isEnabled()) {
+        if (!this.isEnabled()) {
             return;
         }
 
