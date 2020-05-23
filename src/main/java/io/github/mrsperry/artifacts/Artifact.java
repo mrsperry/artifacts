@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Artifact {
     /** The config name of this artifact */
-    private String id;
+    protected String id;
     /** The current enable state of this artifact */
     private boolean enabled;
     /** All runnables handled by this artifact */
