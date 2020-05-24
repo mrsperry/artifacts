@@ -29,7 +29,7 @@ public class NoSleep extends Artifact implements Listener {
 
     @EventHandler
     private void onPlayerInteract(final PlayerInteractEvent event) {
-        if (!NoSleep.isEnabled()) {
+        if (!this.isEnabled()) {
             return;
         }
 
