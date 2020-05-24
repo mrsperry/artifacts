@@ -2,10 +2,7 @@ package io.github.mrsperry.artifacts;
 
 import com.google.common.collect.Lists;
 
-import io.github.mrsperry.artifacts.modules.DeathTNT;
-import io.github.mrsperry.artifacts.modules.Pestilence;
-import io.github.mrsperry.artifacts.modules.SharedDeath;
-import io.github.mrsperry.artifacts.modules.SharedDamage;
+import io.github.mrsperry.artifacts.modules.*;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
@@ -36,7 +33,8 @@ public class Artifacts extends JavaPlugin {
             new DeathTNT(),
             new Pestilence(),
             new SharedDeath(),
-            new SharedDamage()
+            new SharedDamage(),
+            new DepthMeter()
         ));
 
         // Register artifact events

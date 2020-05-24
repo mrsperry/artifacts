@@ -20,3 +20,8 @@ settings:
   # Damages all other non-gamemoded players when one player takes damage
   shared-damage:
     enabled: false
+  # Lowers the maximum health of players the closer they are to Y = 0
+  depth-meter:
+    enabled: true
+    # Y level where the player's health will start to scale down (if above this Y level, you will have full max life)
+    base-level: 64
