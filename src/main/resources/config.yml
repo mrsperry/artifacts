@@ -20,6 +20,37 @@ settings:
   # Damages all other non-gamemoded players when one player takes damage
   shared-damage:
     enabled: false
+  # Stops players from sleeping in beds
+  no-sleep:
+    enabled: true
+    # If the bed should explode when used
+    create-explosion: true
+    # The power of the explosion
+    explosion-power: 5
+    # If the explosion should set nearby blocks on fire
+    create-fire: true
+  # Teleports players to a nearby random location
+  teleportitis:
+    enabled: true
+    # How many seconds should pass before trying to teleport players
+    teleport-interval: 600
+    # The number of blocks the player can be teleported by in any direction
+    teleport-radius: 50
+    # How many times the teleport should look for a valid location (higher will take more time, lower will result in more failures)
+    teleport-tries: 100
+  # Instantly kills players and mobs if they take any damage
+  insta-kill:
+    enabled: false
+  # Swaps every player's position with another player (including velocity)
+  player-swapper:
+    enabled: false
+    # Time between swaps in seconds
+    interval: 600
+  # Modifies fall damage by adding a multiplier
+  knee-cracker:
+    enabled: false
+    # The number used to multiply all fall damage
+    damage-multiplier: 1.5
   # Lowers the maximum health of players the closer they are to Y = 0
   depth-meter:
     enabled: true

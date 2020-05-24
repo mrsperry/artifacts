@@ -34,6 +34,10 @@ public class Artifacts extends JavaPlugin {
             new Pestilence(),
             new SharedDeath(),
             new SharedDamage(),
+            new NoSleep(),
+            new Teleportitis(),
+            new InstaKill(),
+            new KneeCracker(),
             new DepthMeter()
         ));
 
