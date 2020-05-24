@@ -19,9 +19,9 @@ public class PlayerSwapper extends Artifact {
     public PlayerSwapper() {
         super("player-swapper");
         // The time between player swaps, in game ticks
-        final int interval = Config.getInt("player-swapper", "interval", 600) * 20;
+        final int interval = Config.getInt(this.id, "interval", 600) * 20;
 
-        PlayerSwapper.addRunnable(new BukkitRunnable() {
+        this.addRunnable(new BukkitRunnable() {
             /** A list of all current online players that meet the criteria for swapping (not in a higher game mode) */
             private ArrayList<Player> allPlayers;
 
