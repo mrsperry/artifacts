@@ -13,13 +13,13 @@ public class Teleportitis extends Artifact {
     public Teleportitis() {
         super("teleportitis");
         // How many seconds should pass before teleporting players
-        final int teleportInterval = Config.getInt("teleportitis", "teleport-interval", 600) * 20;
+        final int teleportInterval = Config.getInt(this.id, "teleport-interval", 600) * 20;
         // How many blocks a player can be teleported on each axis
-        final int teleportRadius = Config.getInt("teleportitis", "teleport-radius", 50);
+        final int teleportRadius = Config.getInt(this.id, "teleport-radius", 50);
         // How many times the teleport should look for a valid location (higher will take more time, lower will result in more failures)
-        final int teleportTries = Config.getInt("teleportitis", "teleport-tries", 100);
+        final int teleportTries = Config.getInt(this.id, "teleport-tries", 100);
 
-        Artifact.addRunnable(new BukkitRunnable() {
+        this.addRunnable(new BukkitRunnable() {
             @Override
             public void run() {
                 for (final World world : Bukkit.getWorlds()) {

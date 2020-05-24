@@ -1,34 +1,58 @@
 package io.github.mrsperry.artifacts;
 
-import io.github.mrsperry.artifacts.modules.DeathTNT;
-import io.github.mrsperry.artifacts.modules.Teleportitis;
+import com.google.common.collect.Lists;
 
+import io.github.mrsperry.artifacts.modules.*;
+
+import org.bukkit.command.PluginCommand;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Artifacts extends JavaPlugin {
     /** The single instance of Artifacts */
     private static Artifacts instance;
+    /** A set of all artifact instances */
+    private static Set<Artifact> artifactInstances;
 
     @Override
     public void onEnable() {
         Artifacts.instance = this;
+        Artifacts.artifactInstances = new HashSet<>();
 
         // Set default config values if a config isn't found
         this.saveDefaultConfig();
         // Read flag and artifact config values
         Config.initialize(this);
 
+        // Collection of all artifact instances
+        Artifacts.artifactInstances.addAll(Lists.newArrayList(
+            new DeathTNT(),
+            new Pestilence(),
+            new SharedDeath(),
+            new SharedDamage(),
+            new NoSleep(),
+            new Teleportitis()
+        ));
+
         // Register artifact events
         final PluginManager manager = this.getServer().getPluginManager();
-        manager.registerEvents(new DeathTNT(), this);
+        for (final Artifact artifact : Artifacts.artifactInstances) {
+            if (artifact instanceof Listener) {
+                manager.registerEvents((Listener) artifact, this);
+            }
+        }
 
-        new Teleportitis();
-    }
-
-    @Override
-    public void onDisable() {
-
+        // Register commands
+        final PluginCommand command = this.getCommand("artifacts");
+        if (command != null) {
+            command.setExecutor(new Commands());
+        } else {
+            this.getLogger().severe("Could not bing executor for the plugin's command!");
+        }
     }
 
     /**
@@ -37,6 +61,13 @@ public class Artifacts extends JavaPlugin {
      */
     public static Artifacts getInstance() {
         return Artifacts.instance;
+    }
+
+    /**
+     * @return A set of all artifact instances
+     */
+    public static Set<Artifact> getArtifactInstances() {
+        return Artifacts.artifactInstances;
     }
 
     /**
