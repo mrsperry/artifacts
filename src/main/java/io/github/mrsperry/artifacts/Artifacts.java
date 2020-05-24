@@ -37,6 +37,7 @@ public class Artifacts extends JavaPlugin {
             new NoSleep(),
             new Teleportitis(),
             new InstaKill(),
+            new PlayerSwapper(),
             new KneeCracker(),
             new DepthMeter()
         ));
