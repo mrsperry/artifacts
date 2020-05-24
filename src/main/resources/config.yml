@@ -38,3 +38,6 @@ settings:
     teleport-radius: 50
     # How many times the teleport should look for a valid location (higher will take more time, lower will result in more failures)
     teleport-tries: 100
+  # Instantly kills players and mobs if they take any damage
+  insta-kill:
+    enabled: false

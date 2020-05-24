@@ -35,7 +35,8 @@ public class Artifacts extends JavaPlugin {
             new SharedDeath(),
             new SharedDamage(),
             new NoSleep(),
-            new Teleportitis()
+            new Teleportitis(),
+            new InstaKill()
         ));
 
         // Register artifact events
