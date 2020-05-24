@@ -22,9 +22,9 @@ public class NoSleep extends Artifact implements Listener {
 
     public NoSleep() {
         super("no-sleep");
-        this.createExplosion = Config.getBoolean("no-sleep", "create-explosion", true);
-        this.explosionPower = Config.getFloat("no-sleep", "explosion-power", 5);
-        this.createFire = Config.getBoolean("no-sleep", "create-fire", true);
+        this.createExplosion = Config.getBoolean(this.id, "create-explosion", true);
+        this.explosionPower = Config.getFloat(this.id, "explosion-power", 5);
+        this.createFire = Config.getBoolean(this.id, "create-fire", true);
     }
 
     @EventHandler
