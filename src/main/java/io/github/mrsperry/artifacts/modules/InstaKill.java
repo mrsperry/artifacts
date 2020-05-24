@@ -16,7 +16,7 @@ public class InstaKill extends Artifact implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     private void onEntityDamage(final EntityDamageEvent event) {
-        if (!InstaKill.isEnabled()) {
+        if (!this.isEnabled()) {
             return;
         }
 
