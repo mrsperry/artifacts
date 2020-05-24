@@ -38,9 +38,9 @@ public class DepthMeter extends Artifact implements Listener {
     }
 
     /**
-     *
-     * @param player
-     * @param location
+     * Sets the max health of a player based on their Y coordinate distance from the base level
+     * @param player The moving player
+     * @param location The player's location
      */
     private void setHealth(final Player player, final Location location) {
         final float y = location.getBlockY();
