@@ -12,12 +12,12 @@ public class KneeCracker extends Artifact implements Listener {
 
     public KneeCracker() {
         super("knee-cracker");
-        this.damageMultiplier = Config.getFloat("knee-cracker", "damage-multiplier", 1.5f);
+        this.damageMultiplier = Config.getFloat(this.id, "damage-multiplier", 1.5f);
     }
 
     @EventHandler
     private void onEntityDamage(final EntityDamageEvent event) {
-        if (!KneeCracker.isEnabled()) {
+        if (!this.isEnabled()) {
             return;
         }
 
