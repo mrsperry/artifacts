@@ -16,7 +16,7 @@
         <dependency>
             <groupId>io.github.mrsperry.mcutils</groupId>
             <artifactId>mc-utils</artifactId>
-            <version>1.0.6</version>
+            <version>1.0.8</version>
         </dependency>
     </dependencies>
     <build>

@@ -56,3 +56,15 @@ settings:
     enabled: true
     # Y level where the player's health will start to scale down (if above this Y level, you will have full max life)
     base-level: 64
+  # Replaces mob and block drops with randomized drops
+  random-drops:
+    enabled: false
+    # If animals should drop random items
+    animal-drops: true
+    # If monsters should drop random items
+    monster-drops: true
+    # If blocks should drop random items
+    block-drops: true
+    # Materials that will never drop
+    blacklist:
+      - "diamond block"

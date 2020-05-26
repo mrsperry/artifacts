@@ -39,7 +39,8 @@ public class Artifacts extends JavaPlugin {
             new InstaKill(),
             new PlayerSwapper(),
             new KneeCracker(),
-            new DepthMeter()
+            new DepthMeter(),
+            new RandomDrops()
         ));
 
         // Register artifact events

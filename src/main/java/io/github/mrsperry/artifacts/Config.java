@@ -1,13 +1,11 @@
 package io.github.mrsperry.artifacts;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class Config {
@@ -210,6 +208,26 @@ public class Config {
 
         if (value instanceof Float) {
             return (float) value;
+        } else {
+            return defaultValue;
+        }
+    }
+
+    public static List<Material> getMaterialList(final String artifact, final String key, final List<Material> defaultValue) {
+        final Object value = Config.getArtifactSetting(artifact, key);
+
+        if (value instanceof List) {
+            final List<?> values = (List<?>) value;
+            final List<Material> materials = new ArrayList<>();
+            for (final Object index : values) {
+                final String materialName = index.toString().toUpperCase().replaceAll(" ", "_");
+                try {
+                    materials.add(Material.valueOf(materialName));
+                } catch (final IllegalArgumentException ex) {
+                    Config.plugin.getLogger().severe("Could not parse material for '" + artifact + "' under '" + key + "': " + materialName);
+                }
+            }
+            return materials;
         } else {
             return defaultValue;
         }
