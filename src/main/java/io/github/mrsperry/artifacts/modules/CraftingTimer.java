@@ -3,7 +3,7 @@ package io.github.mrsperry.artifacts.modules;
 import io.github.mrsperry.artifacts.Artifact;
 import io.github.mrsperry.artifacts.Artifacts;
 import io.github.mrsperry.artifacts.Config;
-import org.bukkit.Bukkit;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -19,8 +19,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class CraftingTimer extends Artifact implements Listener {
-
-    private static final String ARTIFACT_ID = "craft-timer";
     //Max time to craft before dying
     private final int timeThreshold;
     private final String[] DEATH_MSGS = {
@@ -34,15 +32,15 @@ public class CraftingTimer extends Artifact implements Listener {
     private List<UUID> deadCrafters;
 
     public CraftingTimer() {
-        super(ARTIFACT_ID);
-        this.timeThreshold = Config.getInt(ARTIFACT_ID, "max-crafting-time", 200);
+        super("crafting-timer");
+        this.timeThreshold = Config.getInt(this.id, "max-crafting-time", 10) * 20;
         this.crafters = new HashMap<>();
         this.deadCrafters = new ArrayList<>();
     }
 
     @EventHandler
     public void onCraftingTableOpen(InventoryOpenEvent event) {
-        if(CraftingTimer.isEnabled()) {
+        if(this.isEnabled()) {
             if(event.getInventory().getType().equals(InventoryType.WORKBENCH)) {
                 Player player = (Player) event.getPlayer();
 
@@ -68,7 +66,7 @@ public class CraftingTimer extends Artifact implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        if(CraftingTimer.isEnabled()) {
+        if(this.isEnabled()) {
             if (event.getEntity().getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.CUSTOM)) {
                 //Pick random death message and set it for a player
                 String deathMsg = this.DEATH_MSGS[Artifacts.random(0, this.DEATH_MSGS.length-1)];
@@ -80,7 +78,7 @@ public class CraftingTimer extends Artifact implements Listener {
 
     @EventHandler
     public void onCraftingTableClose(InventoryCloseEvent event) {
-        if(CraftingTimer.isEnabled()) {
+        if(this.isEnabled()) {
             UUID uuid = event.getPlayer().getUniqueId();
             //If player was crafting, cancel runnable and remove from map
             if(crafters.containsKey(uuid)) {
