@@ -10,18 +10,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class HotbarSwapper extends Artifact {
-    private static final String ARTIFACT_ID = "hotbar-swapper";
     private final int coolDown;
-    private final BukkitRunnable swappingRunnable;
 
     public HotbarSwapper() {
-        super(ARTIFACT_ID);
+        super("hotbar-swapper");
 
         //Translate minutes into ticks.
-        coolDown = Config.getInt(ARTIFACT_ID, "swap-cooldown", 10) * 60 * 20;
+        coolDown = Config.getInt(this.id, "swap-cooldown", 10) * 60 * 20;
 
         //runnable to swap items on the hotbar
-        swappingRunnable = new BukkitRunnable() {
+        this.addRunnable(new BukkitRunnable() {
             @Override
             public void run() {
                 for(Player player : Bukkit.getOnlinePlayers()) {
@@ -40,8 +38,6 @@ public class HotbarSwapper extends Artifact {
                     inventory.setItem(slot2, temp);
                 }
             }
-        };
-
-        HotbarSwapper.addRunnable(swappingRunnable, coolDown);
+        }, this.coolDown);
     }
 }
