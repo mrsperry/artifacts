@@ -4,8 +4,6 @@ import io.github.mrsperry.artifacts.Artifact;
 import io.github.mrsperry.artifacts.Artifacts;
 import io.github.mrsperry.artifacts.Config;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,14 +24,12 @@ public class CraftingTimer extends Artifact implements Listener {
     private final List<String> deathMessages;
     /** A map of all players currently crafting */
     private final Map<UUID, BukkitRunnable> crafters;
-    private final List<UUID> deadCrafters;
 
     public CraftingTimer() {
         super("crafting-timer");
         this.deathMessages = Config.getStringList(this.id, "death-messages", new ArrayList<>());
         this.maxCraftingTime = Config.getInt(this.id, "max-crafting-time", 10) * 20;
         this.crafters = new HashMap<>();
-        this.deadCrafters = new ArrayList<>();
     }
 
     @EventHandler
@@ -100,34 +96,13 @@ public class CraftingTimer extends Artifact implements Listener {
         if (this.crafters.containsKey(uuid)) {
             this.crafters.get(uuid).cancel();
             this.crafters.remove(uuid);
-
-            // Special death scenario, killed on crafting inventory close
-            if (this.deadCrafters.contains(uuid)) {
-                final Player player = (Player) event.getPlayer();
-                player.getWorld().createExplosion(player.getLocation(), 0);
-                player.damage(player.getHealth());
-                this.deadCrafters.remove(player.getUniqueId());
-            }
         }
     }
 
     private void outOfTime(final Player player) {
-        final Location location = player.getLocation();
-
-        // 10% chance to get special death scenario
-        if (Artifacts.random(1, 10) > 1) {
-            // Kill the player with an explosion that does no damage
-            player.getWorld().createExplosion(location, 0);
-            player.damage(player.getHealth());
-        } else {
-            // Add player to list so they die when they close crafting inventory
-            player.sendMessage(ChatColor.DARK_PURPLE + "Ill leave this one up to you");
-            player.playSound(location, Sound.BLOCK_BEACON_DEACTIVATE, 1f, 1f);
-
-            final UUID id = player.getUniqueId();
-            this.deadCrafters.add(id);
-            this.crafters.get(id).cancel();
-        }
+        // Kill the player with an explosion that does no damage
+        player.getWorld().createExplosion(player.getLocation(), 0);
+        player.damage(player.getHealth());
     }
 
     // Ticking sound, max (a) ticks apart, min (b) ticks apart
