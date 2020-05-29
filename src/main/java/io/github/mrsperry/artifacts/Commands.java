@@ -104,12 +104,12 @@ public class Commands implements CommandExecutor {
             builder.append(artifact.isEnabled() ? ChatColor.GREEN : ChatColor.RED)
                 .append(artifact.getClass().getSimpleName())
                 .append(ChatColor.GRAY)
-                .append(",");
+                .append(", ");
         }
 
         // Add the header and append the artifact names
         return ChatColor.DARK_GRAY + "=======" + ChatColor.GRAY + " Artifacts " + ChatColor.DARK_GRAY + "======="
-            + "\n" + builder.substring(0, builder.length() - 1);
+            + "\n" + builder.substring(0, builder.length() - 2);
     }
 
     /**
