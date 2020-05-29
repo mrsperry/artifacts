@@ -70,6 +70,11 @@ settings:
       - "diamond block"
   # Kills any player that spends too long in a crafting menu
   crafting-timer:
-      enabled: true
-      # The number of seconds before the player dies while crafting
-      max-crafting-time: 10
+    enabled: true
+    # The number of seconds before the player dies while crafting
+    max-crafting-time: 10
+    death-messages:
+      - "%player% failed to craft"
+      - "Crafting proved to be too much for %player%"
+      - "%player% has crafted themselves into the grave"
+      - "%player% needed just a bit more time"

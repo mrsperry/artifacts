@@ -20,22 +20,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class CraftingTimer extends Artifact implements Listener {
-    /** Custom death messages to use when a player dies while crafting */
-    private final String[] deathMessages = {
-        "%player% failed to craft",
-        "Crafting proved to be too much for %player%",
-        "%player% has crafted themselves into the grave",
-        "%player% needed just a bit more time"
-    };
-
     /** Number of seconds before a player dies while crafting */
     private final int maxCraftingTime;
+    /** Custom death messages to use when a player dies while crafting */
+    private final List<String> deathMessages;
     /** A map of all players currently crafting */
     private final Map<UUID, BukkitRunnable> crafters;
     private final List<UUID> deadCrafters;
 
     public CraftingTimer() {
         super("crafting-timer");
+        this.deathMessages = Config.getStringList(this.id, "death-messages", new ArrayList<>());
         this.maxCraftingTime = Config.getInt(this.id, "max-crafting-time", 10) * 20;
         this.crafters = new HashMap<>();
         this.deadCrafters = new ArrayList<>();
@@ -79,11 +74,16 @@ public class CraftingTimer extends Artifact implements Listener {
             return;
         }
 
+        // Make sure there are custom messages to use
+        if (this.deathMessages.size() == 0) {
+            return;
+        }
+
         final Player player = event.getEntity();
         final EntityDamageEvent lastDamage = player.getLastDamageCause();
         if (lastDamage != null && lastDamage.getCause() == EntityDamageEvent.DamageCause.CUSTOM) {
             // Pick random death message
-            final String message = this.deathMessages[Artifacts.random(0, this.deathMessages.length - 1)];
+            final String message = this.deathMessages.get(Artifacts.random(0, this.deathMessages.size() - 1));
             // Insert the player's name into the message
             event.setDeathMessage(message.replace("%player%", player.getDisplayName()));
         }

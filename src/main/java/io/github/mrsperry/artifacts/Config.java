@@ -213,6 +213,21 @@ public class Config {
         }
     }
 
+    public static List<String> getStringList(final String artifact, final String key, final List<String> defaultValue) {
+        final Object value = Config.getArtifactSetting(artifact, key);
+
+        if (value instanceof List) {
+            final List<?> values = (List<?>) value;
+            final List<String> strings = new ArrayList<>();
+            for (final Object index : values) {
+                strings.add(index.toString());
+            }
+            return strings;
+        } else {
+            return defaultValue;
+        }
+    }
+
     public static List<Material> getMaterialList(final String artifact, final String key, final List<Material> defaultValue) {
         final Object value = Config.getArtifactSetting(artifact, key);
 
