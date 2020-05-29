@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class KneeCracker extends Artifact implements Listener {
+    /** Multiplier used when applying any fall damage to an entity */
     private final float damageMultiplier;
 
     public KneeCracker() {

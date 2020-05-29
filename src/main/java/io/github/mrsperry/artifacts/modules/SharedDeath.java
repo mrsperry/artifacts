@@ -17,7 +17,7 @@ public class SharedDeath extends Artifact implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDeath(final PlayerDeathEvent event) {
+    private void onPlayerDeath(final PlayerDeathEvent event) {
         if (!this.isEnabled()) {
             return;
         }

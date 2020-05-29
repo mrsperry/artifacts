@@ -30,19 +30,19 @@ public class Artifacts extends JavaPlugin {
 
         // Collection of all artifact instances
         Artifacts.artifactInstances.addAll(Lists.newArrayList(
+            new CraftingTimer(),
             new DeathTNT(),
-            new Pestilence(),
-            new SharedDeath(),
-            new SharedDamage(),
-            new NoSleep(),
-            new Teleportitis(),
-            new InstaKill(),
-            new PlayerSwapper(),
-            new KneeCracker(),
             new DepthMeter(),
-            new RandomDrops(),
             new HotbarSwapper(),
-            new CraftingTimer()
+            new InstaKill(),
+            new KneeCracker(),
+            new NoSleep(),
+            new Pestilence(),
+            new PlayerSwapper(),
+            new RandomDrops(),
+            new SharedDamage(),
+            new SharedDeath(),
+            new Teleportitis()
         ));
 
         // Register artifact events

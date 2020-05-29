@@ -213,35 +213,58 @@ public class Config {
         }
     }
 
+    /**
+     * Gets a list of strings or objects represented as strings
+     * @param artifact The artifact the setting should come from
+     * @param key The name of the setting
+     * @param defaultValue The default value to use if the setting could not be found
+     * @return The list of strings setting of the artifact or the default value if it could not be found
+     */
     public static List<String> getStringList(final String artifact, final String key, final List<String> defaultValue) {
         final Object value = Config.getArtifactSetting(artifact, key);
 
+        // Make sure the value is a list
         if (value instanceof List) {
             final List<?> values = (List<?>) value;
             final List<String> strings = new ArrayList<>();
+
+            // Convert each value into a string
             for (final Object index : values) {
                 strings.add(index.toString());
             }
+
             return strings;
         } else {
             return defaultValue;
         }
     }
 
+    /**
+     * Gets a list of materials
+     * @param artifact The artifact the setting should come from
+     * @param key The name of the setting
+     * @param defaultValue The default value to use if the setting could not be found
+     * @return The list of materials setting of the artifact or the default value if it could not be found
+     */
     public static List<Material> getMaterialList(final String artifact, final String key, final List<Material> defaultValue) {
         final Object value = Config.getArtifactSetting(artifact, key);
 
+        // Make sure the value is a list
         if (value instanceof List) {
             final List<?> values = (List<?>) value;
             final List<Material> materials = new ArrayList<>();
+
             for (final Object index : values) {
+                // Convert string type to material enum name
                 final String materialName = index.toString().toUpperCase().replaceAll(" ", "_");
+
                 try {
                     materials.add(Material.valueOf(materialName));
                 } catch (final IllegalArgumentException ex) {
                     Config.plugin.getLogger().severe("Could not parse material for '" + artifact + "' under '" + key + "': " + materialName);
                 }
             }
+
             return materials;
         } else {
             return defaultValue;
