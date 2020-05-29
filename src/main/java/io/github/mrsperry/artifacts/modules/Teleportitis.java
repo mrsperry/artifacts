@@ -22,35 +22,34 @@ public class Teleportitis extends Artifact {
         this.addRunnable(new BukkitRunnable() {
             @Override
             public void run() {
-                for (final World world : Bukkit.getWorlds()) {
-                    for (final Player player : world.getEntitiesByClass(Player.class)) {
-                        final GameMode gameMode = player.getGameMode();
-                        if (gameMode == GameMode.CREATIVE || gameMode == GameMode.SPECTATOR) {
-                            continue;
-                        }
-
-                        // Get the original position
-                        final Location origin = player.getLocation();
-                        // Get the new position
-                        final Location location = LocationUtils.getRandomSafeLocation(origin, teleportRadius, teleportTries);
-
-                        // Cancel if a new position could not be found
-                        if (location == null) {
-                            continue;
-                        }
-
-                        // Spawn effects at the original position
-                        world.playSound(origin, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1, 1);
-                        world.spawnParticle(Particle.PORTAL, origin, 100);
-
-                        // Teleport the player
-                        player.teleport(location);
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Your surroundings suddenly seem different...");
-
-                        // Spawn effects at the new position
-                        world.playSound(location, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1, 1);
-                        world.spawnParticle(Particle.PORTAL, location, 100);
+                for (final Player player : Bukkit.getOnlinePlayers()) {
+                    final GameMode gameMode = player.getGameMode();
+                    if (gameMode == GameMode.CREATIVE || gameMode == GameMode.SPECTATOR) {
+                        continue;
                     }
+
+                    final World world = player.getWorld();
+                    // Get the original position
+                    final Location origin = player.getLocation();
+                    // Get the new position
+                    final Location location = LocationUtils.getRandomSafeLocation(origin, teleportRadius, teleportTries);
+
+                    // Cancel if a new position could not be found
+                    if (location == null) {
+                        continue;
+                    }
+
+                    // Spawn effects at the original position
+                    world.playSound(origin, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1, 1);
+                    world.spawnParticle(Particle.PORTAL, origin, 100);
+
+                    // Teleport the player
+                    player.teleport(location);
+                    player.sendMessage(ChatColor.DARK_PURPLE + "Your surroundings suddenly seem different...");
+
+                    // Spawn effects at the new position
+                    world.playSound(location, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1, 1);
+                    world.spawnParticle(Particle.PORTAL, location, 100);
                 }
             }
         }, teleportInterval);
