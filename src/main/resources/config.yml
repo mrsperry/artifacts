@@ -1,13 +1,10 @@
-# Global artifact settings
-flags:
-    # If explosions generated from artifacts should break blocks
-    explosion-damage: false
-
 # Artifact specific settings
 settings:
     # Spawns TNT wherever a hostile monster is killed
     death-tnt:
         enabled: false
+        # If explosions created from this artifact should damage terrain
+        explosion-damage: false
         # The min and max number of ticks that can occur before a spawned TNT can explode
         min-fuse-ticks: 60
         max-fuse-ticks: 100
@@ -25,6 +22,8 @@ settings:
         enabled: false
         # If the bed should explode when used
         create-explosion: true
+        # If explosions created from this artifact should damage terrain
+        explosion-damage: false
         # The power of the explosion
         explosion-power: 5
         # If the explosion should set nearby blocks on fire

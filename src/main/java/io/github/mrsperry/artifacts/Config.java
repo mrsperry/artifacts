@@ -12,14 +12,6 @@ public class Config {
     /** The owning plugin of this class */
     private static JavaPlugin plugin;
     /**
-     * A set of global artifact settings represented as true/false flags.
-     * <br><br>
-     * Only enabled flags will be put into this set; disabled flags are ignored.
-     * <br><br>
-     * Use {@code Artifacts.isFlagEnabled()} to check if a flag is currently enabled.
-     */
-    private static final Set<ArtifactFlags> flags = new HashSet<>();
-    /**
      * A map containing all settings pertaining to each artifact.
      * <br><br>
      * Use the getter methods to access the settings.
@@ -30,55 +22,11 @@ public class Config {
      * Reads flag and artifact settings from the provided plugin's configuration file
      * @param plugin The owning plugin
      */
-    public static void initialize(JavaPlugin plugin) {
+    public static void initialize(final JavaPlugin plugin) {
         Config.plugin = plugin;
 
-        Config.readFlagSettings();
-        Config.readArtifactSettings();
-    }
-
-    /**
-     * Reads all flag settings from the config
-     */
-    private static void readFlagSettings() {
-        final Logger logger = Config.plugin.getLogger();
-        final FileConfiguration config = Config.plugin.getConfig();
-        // Get the list of flags
-        final ConfigurationSection flags = config.getConfigurationSection("flags");
-
-        if (flags == null) {
-            logger.warning("Could not find flags list");
-            return;
-        }
-
-        logger.info("===== Flags =====");
-        for (String name : flags.getKeys(false)) {
-            // Check if this flag is enabled; if it isn't found then assume it should be disabled
-            final boolean enabled = config.getBoolean("flags." + name, false);
-            logger.info(name + ": " + enabled);
-
-            // Don't add disabled flags
-            if (enabled) {
-                final ArtifactFlags flag;
-                try {
-                    // Convert config name to enum name
-                    flag = ArtifactFlags.valueOf(name.toUpperCase().replace("-", "_"));
-                } catch (final IllegalArgumentException ex) {
-                    logger.severe("Could not find flag: " + name);
-                    continue;
-                }
-
-                Config.flags.add(flag);
-            }
-        }
-    }
-
-    /**
-     * Reads all artifact settings from the config
-     */
-    private static void readArtifactSettings() {
-        final Logger logger = Config.plugin.getLogger();
-        final FileConfiguration config = Config.plugin.getConfig();
+        final Logger logger = plugin.getLogger();
+        final FileConfiguration config = plugin.getConfig();
         // Get the map of settings
         final ConfigurationSection settings = config.getConfigurationSection("settings");
 
@@ -120,15 +68,6 @@ public class Config {
         final JavaPlugin plugin = Config.plugin;
         plugin.getConfig().set("settings." + id + ".enabled", enabled);
         plugin.saveConfig();
-    }
-
-    /**
-     * Checks if a flag has been enabled.
-     * @param flag The flag to check
-     * @return If the flag is enabled
-     */
-    public static boolean isFlagEnabled(final ArtifactFlags flag) {
-        return Config.flags.contains(flag);
     }
 
     /**

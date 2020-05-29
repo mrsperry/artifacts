@@ -1,7 +1,6 @@
 package io.github.mrsperry.artifacts.modules;
 
 import io.github.mrsperry.artifacts.Artifact;
-import io.github.mrsperry.artifacts.ArtifactFlags;
 import io.github.mrsperry.artifacts.Config;
 
 import org.bukkit.GameMode;
@@ -15,6 +14,8 @@ import org.bukkit.inventory.EquipmentSlot;
 public class NoSleep extends Artifact implements Listener {
     /** If an explosion should be created when the player tries to use a bed */
     private final boolean createExplosion;
+    /** If an explosion from this artifact should damage terrain */
+    private final boolean explosionDamage;
     /** The power of the created explosion */
     private final float explosionPower;
     /** If the explosion should light nearby blocks on fire */
@@ -23,6 +24,7 @@ public class NoSleep extends Artifact implements Listener {
     public NoSleep() {
         super("no-sleep");
         this.createExplosion = Config.getBoolean(this.id, "create-explosion", true);
+        this.explosionDamage = Config.getBoolean(this.id, "explosion-damage", false);
         this.explosionPower = Config.getFloat(this.id, "explosion-power", 5);
         this.createFire = Config.getBoolean(this.id, "create-fire", true);
     }
@@ -60,7 +62,7 @@ public class NoSleep extends Artifact implements Listener {
 
         // Create the explosion
         if (this.createExplosion) {
-            block.getWorld().createExplosion(block.getLocation(), this.explosionPower, this.createFire, Config.isFlagEnabled(ArtifactFlags.EXPLOSION_DAMAGE));
+            block.getWorld().createExplosion(block.getLocation(), this.explosionPower, this.createFire, this.explosionDamage);
         }
     }
 }

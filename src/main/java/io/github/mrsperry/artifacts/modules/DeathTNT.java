@@ -1,7 +1,6 @@
 package io.github.mrsperry.artifacts.modules;
 
 import io.github.mrsperry.artifacts.Artifact;
-import io.github.mrsperry.artifacts.ArtifactFlags;
 import io.github.mrsperry.artifacts.Artifacts;
 import io.github.mrsperry.artifacts.Config;
 
@@ -21,6 +20,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 public class DeathTNT extends Artifact implements Listener {
+    /** If explosions from this artifact should damage terrain */
+    private final boolean explosionDamage;
     /** The minimum number of ticks before the TNT explodes */
     private final int minFuseTicks;
     /** The maximum number of ticks before the TNT explodes */
@@ -28,6 +29,7 @@ public class DeathTNT extends Artifact implements Listener {
 
     public DeathTNT() {
         super("death-tnt");
+        this.explosionDamage = Config.getBoolean(this.id, "explosion-damage", false);
         this.minFuseTicks = Config.getInt(this.id, "min-fuse-ticks", 60);
         this.maxFuseTicks = Config.getInt(this.id, "max-fuse-ticks", 100);
     }
@@ -49,7 +51,7 @@ public class DeathTNT extends Artifact implements Listener {
             tnt.setFuseTicks(Artifacts.random(this.minFuseTicks, this.maxFuseTicks));
 
             // Check if the explosion can do block damage (cast to a byte as persistent data can't hold booleans)
-            final byte canDoDamage = (byte) (Config.isFlagEnabled(ArtifactFlags.EXPLOSION_DAMAGE) ? 0 : 1);
+            final byte canDoDamage = (byte) (this.explosionDamage ? 0 : 1);
             // Set the persistent data
             final PersistentDataContainer data = tnt.getPersistentDataContainer();
             data.set(new NamespacedKey(Artifacts.getInstance(), "tnt"), PersistentDataType.BYTE, canDoDamage);
