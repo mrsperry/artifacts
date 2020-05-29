@@ -74,7 +74,8 @@ settings:
     # The number of seconds before the player dies while crafting
     max-crafting-time: 10
     # Custom death messages to use when a player dies from crafting
-    # User `%player%` to add in the player's name
     death-messages:
-      - "Crafting proved to be too much for %player%"
-      - "%player% crafted themselves into an grave"
+      - "died while crafting"
+      - "didn't craft fast enough"
+      - "crafted themselves into an early grave"
+      - "couldn't put the pieces together in time"

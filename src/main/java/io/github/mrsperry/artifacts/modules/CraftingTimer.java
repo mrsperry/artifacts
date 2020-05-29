@@ -113,10 +113,8 @@ public class CraftingTimer extends Artifact implements Listener {
 
         final EntityDamageEvent lastDamage = player.getLastDamageCause();
         if (lastDamage != null && lastDamage.getCause() == EntityDamageEvent.DamageCause.CUSTOM) {
-            // Pick random death message
-            final String message = this.deathMessages.get(Artifacts.random(0, this.deathMessages.size() - 1));
-            // Insert the player's name into the message
-            event.setDeathMessage(message.replace("%player%", player.getDisplayName()));
+            // Set a random death message
+            event.setDeathMessage(" " + this.deathMessages.get(Artifacts.random(0, this.deathMessages.size() - 1)));
 
             // Remove the mark for a custom death message
             container.remove(key);
