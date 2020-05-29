@@ -1,43 +1,50 @@
 package io.github.mrsperry.artifacts.modules;
 
 import io.github.mrsperry.artifacts.Artifact;
-import io.github.mrsperry.artifacts.Artifacts;
 import io.github.mrsperry.artifacts.Config;
+
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class HotbarSwapper extends Artifact {
-    private final int coolDown;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+public class HotbarSwapper extends Artifact {
     public HotbarSwapper() {
         super("hotbar-swapper");
 
-        //Translate minutes into ticks.
-        coolDown = Config.getInt(this.id, "swap-cooldown", 10) * 60 * 20;
+        // The number of seconds between each swap
+        final int swapCooldown = Config.getInt(this.id, "swap-cooldown", 600) * 20;
 
-        //runnable to swap items on the hotbar
         this.addRunnable(new BukkitRunnable() {
             @Override
             public void run() {
-                for(Player player : Bukkit.getOnlinePlayers()) {
-                    mixHotBar(player);
-                }
-            }
+                for (final Player player : Bukkit.getOnlinePlayers()) {
+                    final GameMode gameMode = player.getGameMode();
+                    if (gameMode == GameMode.CREATIVE || gameMode == GameMode.SPECTATOR) {
+                        continue;
+                    }
 
-            //randomly selects two slots and swaps the items, 15 times;
-            private void mixHotBar(Player player) {
-                for(int i = 0; i < 15; i++) {
-                    Inventory inventory = player.getInventory();
-                    int slot1 = Artifacts.random(0, 8);
-                    int  slot2 = Artifacts.random(0, 8);
-                    ItemStack temp = inventory.getItem(slot1);
-                    inventory.setItem(slot1, inventory.getItem(slot2));
-                    inventory.setItem(slot2, temp);
+                    final PlayerInventory inventory = player.getInventory();
+
+                    // Get the items in the player's hotbar
+                    final List<ItemStack> items = new ArrayList<>();
+                    for (int index = 0; index < 9; index++) {
+                        items.add(inventory.getItem(index));
+                    }
+
+                    // Shuffle the order and set the items
+                    Collections.shuffle(items);
+                    for (int index = 0; index < 9; index++) {
+                        inventory.setItem(index, items.get(index));
+                    }
                 }
             }
-        }, this.coolDown);
+        }, swapCooldown);
     }
 }
