@@ -41,6 +41,7 @@ public class Artifacts extends JavaPlugin {
             new KneeCracker(),
             new DepthMeter(),
             new RandomDrops(),
+            new HotbarSwapper(),
             new CraftingTimer()
         ));
 

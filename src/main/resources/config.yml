@@ -68,6 +68,11 @@ settings:
     # Materials that will never drop
     blacklist:
       - "diamond block"
+  # Swaps player's hotbar items to a random order
+  hotbar-swapper:
+    enabled: true
+    # The number of seconds between swaps
+    swap-cooldown: 600
   # Kills any player that spends too long in a crafting menu
   crafting-timer:
     enabled: true
