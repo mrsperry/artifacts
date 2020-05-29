@@ -6,7 +6,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 public class Config {
     /** The owning plugin of this class */
@@ -25,34 +24,27 @@ public class Config {
     public static void initialize(final JavaPlugin plugin) {
         Config.plugin = plugin;
 
-        final Logger logger = plugin.getLogger();
         final FileConfiguration config = plugin.getConfig();
         // Get the map of settings
         final ConfigurationSection settings = config.getConfigurationSection("settings");
 
         if (settings == null) {
-            logger.warning("Could not find settings map");
+            plugin.getLogger().warning("Could not find settings map");
             return;
         }
 
-        logger.info("===== Settings =====");
         for (String artifact : settings.getKeys(false)) {
-            logger.info(artifact + ":");
 
             // Get the map of this artifact's settings
             final ConfigurationSection artifactSettings = config.getConfigurationSection("settings." + artifact);
             if (artifactSettings == null) {
-                logger.info("    < no settings found >");
                 continue;
             }
 
             // Add all settings found in the config to a map
             final Map<String, Object> currentSettings = new HashMap<>();
             for (String name : artifactSettings.getKeys(false)) {
-                final Object value = config.get("settings." + artifact + "." + name);
-                logger.info("    " + name + ": " + value);
-
-                currentSettings.put(name, value);
+                currentSettings.put(name, config.get("settings." + artifact + "." + name));
             }
 
             Config.artifactSettings.put(artifact, currentSettings);
