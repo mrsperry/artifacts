@@ -1,22 +1,23 @@
 package io.github.mrsperry.artifacts;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
+import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class Commands implements CommandExecutor {
+public class Commands implements TabExecutor {
     @Override
-    public boolean onCommand(final CommandSender sender, final Command command, final String cmdLine, final String[] args) {
-        if (command.getName().equalsIgnoreCase("artifacts")) {
-            if (args.length == 0) {
-                sender.sendMessage(ChatColor.RED + "Not enough arguments");
-                sender.sendMessage(ChatColor.RED + "Usage: /artifacts <list | enable | disable | randomize>");
-                return true;
-            } else if (args.length == 1) {
+    public boolean onCommand(final CommandSender sender, final Command command, final String alias, final String[] args) {
+        if (!command.getName().equalsIgnoreCase("artifacts")) {
+            return false;
+        }
+
+        switch (args.length) {
+            case 1:
                 final String arg = args[0].toLowerCase();
 
                 switch (arg) {
@@ -39,7 +40,7 @@ public class Commands implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "Usage: /artifacts <list | enable | disable | randomize>");
                         return true;
                 }
-            } else if (args.length == 2) {
+            case 2:
                 final String arg1 = args[0].toLowerCase();
                 final String arg2 = args[1].toLowerCase();
 
@@ -67,9 +68,9 @@ public class Commands implements CommandExecutor {
                             this.setAllArtifactEnable(true);
                             sender.sendMessage(ChatColor.GREEN + "All artifacts are now enabled.");
                         } else if (this.setArtifactEnable(arg2, true)) {
-                            sender.sendMessage(ChatColor.GREEN + "Artifact successfully enabled: " + arg2);
+                            sender.sendMessage(ChatColor.GREEN + "Artifact successfully enabled: " + args[1]);
                         } else {
-                            sender.sendMessage(ChatColor.RED + "Could not enable artifact: " + arg2);
+                            sender.sendMessage(ChatColor.RED + "Could not enable artifact: " + args[1]);
                         }
                         return true;
                     case "disable":
@@ -77,9 +78,9 @@ public class Commands implements CommandExecutor {
                             this.setAllArtifactEnable(false);
                             sender.sendMessage(ChatColor.GREEN + "All artifacts are now disabled.");
                         } else if (this.setArtifactEnable(arg2, false)) {
-                            sender.sendMessage(ChatColor.GREEN + "Artifact successfully disabled: " + arg2);
+                            sender.sendMessage(ChatColor.GREEN + "Artifact successfully disabled: " + args[1]);
                         } else {
-                            sender.sendMessage(ChatColor.RED + "Could not disable artifact: " + arg2);
+                            sender.sendMessage(ChatColor.RED + "Could not disable artifact: " + args[1]);
                         }
                         return true;
                     default:
@@ -87,10 +88,47 @@ public class Commands implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "Usage: /artifacts <list | enable | disable | randomize>");
                         return true;
                 }
+            default:
+                sender.sendMessage(ChatColor.RED + "Not enough arguments");
+                sender.sendMessage(ChatColor.RED + "Usage: /artifacts <list | enable | disable | randomize>");
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(final CommandSender sender, final Command command, final String alias, final String[] args) {
+        final ArrayList<String> options = new ArrayList<>();
+
+        if (!command.getName().equalsIgnoreCase("artifacts")) {
+            return options;
+        }
+
+        if (args.length == 1) {
+            // Add default arguments
+            StringUtil.copyPartialMatches(args[0], Arrays.asList("list", "enable", "disable", "randomize"), options);
+        } else if (args.length == 2) {
+            switch (args[0]) {
+                case "enable":
+                case "disable":
+                    // Get each artifact's name
+                    final Set<String> names = new HashSet<>();
+                    for (final Artifact instance : Artifacts.getArtifactInstances()) {
+                        names.add(instance.getClass().getSimpleName());
+                    }
+                    // Add special option for modifying all artifacts
+                    names.add("all");
+
+                    StringUtil.copyPartialMatches(args[1], names, options);
+                    break;
+                case "randomize":
+                    StringUtil.copyPartialMatches(args[1], Collections.singletonList("[amount]"), options);
+                    break;
             }
         }
 
-        return false;
+        return options;
     }
 
     /**
