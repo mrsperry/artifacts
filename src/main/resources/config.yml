@@ -1,5 +1,16 @@
 # Artifact specific settings
 settings:
+    # Kills any player that spends too long in a crafting menu
+    crafting-timer:
+        enabled: false
+        # The number of seconds before the player dies while crafting
+        max-crafting-time: 10
+        # Custom death messages to use when a player dies from crafting
+        death-messages:
+            - "died while crafting"
+            - "didn't craft fast enough"
+            - "crafted themselves into an early grave"
+            - "couldn't put the pieces together in time"
     # Spawns TNT wherever a hostile monster is killed
     death-tnt:
         enabled: false
@@ -8,15 +19,26 @@ settings:
         # The min and max number of ticks that can occur before a spawned TNT can explode
         min-fuse-ticks: 60
         max-fuse-ticks: 100
-    # Prevents planting of all harvestable plants and saplings
-    pestilence:
+    # Lowers the maximum health of players the closer they are to Y = 0
+    depth-meter:
         enabled: false
-    # Kills all other non-gamemoded players when one player dies
-    shared-death:
-        enabled: true
-    # Damages all other non-gamemoded players when one player takes damage
-    shared-damage:
+        # Y level where the player's health will start to scale down (if above this Y level, you will have full max life)
+        base-level: 64
+    # Swaps player's hotbar items to a random order
+    hotbar-swapper:
         enabled: false
+        # The number of seconds between swaps
+        swap-cooldown: 600
+    # Instantly kills players and mobs if they take any damage
+    insta-kill:
+        enabled: false
+    # Modifies fall damage by adding a multiplier
+    knee-cracker:
+        enabled: false
+        # If the damage multiplier should only apply to players
+        only-players: true
+        # The number used to multiply all fall damage
+        damage-multiplier: 1.5
     # Stops players from sleeping in beds
     no-sleep:
         enabled: false
@@ -28,35 +50,14 @@ settings:
         explosion-power: 5
         # If the explosion should set nearby blocks on fire
         create-fire: true
-    # Teleports players to a nearby random location
-    teleportitis:
-        enabled: false
-        # How many seconds should pass before trying to teleport players
-        teleport-interval: 600
-        # The number of blocks the player can be teleported by in any direction
-        teleport-radius: 50
-        # How many times the teleport should look for a valid location (higher will take more time, lower will result in more failures)
-        teleport-tries: 100
-    # Instantly kills players and mobs if they take any damage
-    insta-kill:
+    # Prevents planting of all harvestable plants and saplings
+    pestilence:
         enabled: false
     # Swaps every player's position with another player (including velocity)
     player-swapper:
         enabled: false
         # Time between swaps in seconds
         interval: 600
-    # Modifies fall damage by adding a multiplier
-    knee-cracker:
-        enabled: false
-        # If the damage multiplier should only apply to players
-        only-players: true
-        # The number used to multiply all fall damage
-        damage-multiplier: 1.5
-    # Lowers the maximum health of players the closer they are to Y = 0
-    depth-meter:
-        enabled: false
-        # Y level where the player's health will start to scale down (if above this Y level, you will have full max life)
-        base-level: 64
     # Replaces mob and block drops with randomized drops
     random-drops:
         enabled: false
@@ -68,20 +69,19 @@ settings:
         block-drops: true
         # Materials that will never drop
         blacklist:
-          - "diamond block"
-    # Swaps player's hotbar items to a random order
-    hotbar-swapper:
+            - "diamond block"
+    # Damages all other non-gamemoded players when one player takes damage
+    shared-damage:
         enabled: false
-        # The number of seconds between swaps
-        swap-cooldown: 600
-    # Kills any player that spends too long in a crafting menu
-    crafting-timer:
+    # Kills all other non-gamemoded players when one player dies
+    shared-death:
         enabled: false
-        # The number of seconds before the player dies while crafting
-        max-crafting-time: 10
-        # Custom death messages to use when a player dies from crafting
-        death-messages:
-          - "died while crafting"
-          - "didn't craft fast enough"
-          - "crafted themselves into an early grave"
-          - "couldn't put the pieces together in time"
+    # Teleports players to a nearby random location
+    teleportitis:
+        enabled: false
+        # How many seconds should pass before trying to teleport players
+        teleport-interval: 600
+        # The number of blocks the player can be teleported by in any direction
+        teleport-radius: 50
+        # How many times the teleport should look for a valid location (higher will take more time, lower will result in more failures)
+        teleport-tries: 100
