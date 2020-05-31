@@ -25,18 +25,9 @@ public class Config {
         Config.plugin = plugin;
 
         final FileConfiguration config = plugin.getConfig();
-        // Get the map of settings
-        final ConfigurationSection settings = config.getConfigurationSection("settings");
-
-        if (settings == null) {
-            plugin.getLogger().warning("Could not find settings map");
-            return;
-        }
-
-        for (String artifact : settings.getKeys(false)) {
-
+        for (final String artifact : config.getKeys(false)) {
             // Get the map of this artifact's settings
-            final ConfigurationSection artifactSettings = config.getConfigurationSection("settings." + artifact);
+            final ConfigurationSection artifactSettings = config.getConfigurationSection(artifact);
             if (artifactSettings == null) {
                 continue;
             }
@@ -44,7 +35,7 @@ public class Config {
             // Add all settings found in the config to a map
             final Map<String, Object> currentSettings = new HashMap<>();
             for (String name : artifactSettings.getKeys(false)) {
-                currentSettings.put(name, config.get("settings." + artifact + "." + name));
+                currentSettings.put(name, config.get(artifact + "." + name));
             }
 
             Config.artifactSettings.put(artifact, currentSettings);
@@ -58,7 +49,7 @@ public class Config {
      */
     public static void setArtifactEnable(final String id, final boolean enabled) {
         final JavaPlugin plugin = Config.plugin;
-        plugin.getConfig().set("settings." + id + ".enabled", enabled);
+        plugin.getConfig().set(id + ".enabled", enabled);
         plugin.saveConfig();
     }
 
