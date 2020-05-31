@@ -145,6 +145,7 @@ public class Commands implements CommandExecutor {
     private void setAllArtifactEnable(final boolean enabled) {
         for (final Artifact artifact : Artifacts.getArtifactInstances()) {
             artifact.setEnabled(enabled);
+            Config.setArtifactEnable(artifact.getID(), enabled);
         }
     }
 
