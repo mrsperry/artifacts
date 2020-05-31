@@ -48,6 +48,8 @@ settings:
     # Modifies fall damage by adding a multiplier
     knee-cracker:
         enabled: false
+        # If the damage multiplier should only apply to players
+        only-players: true
         # The number used to multiply all fall damage
         damage-multiplier: 1.5
     # Lowers the maximum health of players the closer they are to Y = 0
